@@ -1,7 +1,8 @@
 movies
 ======
 
-movies is a project where i try to list every movie i have seen.
+[movies](http://petergrassberger.com/movies) is a project where i try to list 
+every movie i have seen.
 
 Created by:
 -----------
