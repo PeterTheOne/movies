@@ -49,8 +49,19 @@
 		if (!isset($_POST['comment']) || isEmpty($_POST['comment'])) {
 			$error .= "<li>comment not set</li>\n";
 		}
-		if (!isset($_POST['cat']) || isEmpty($_POST['cat'])) {
-			$error .= "<li>cat not set</li>\n";
+		if (!isset($_POST['catradio']) || isEmpty($_POST['catradio'])) {
+			$error .= "<li>catradio not set</li>\n";
+		} else {
+			$catradio = sanitize($_POST['catradio']);
+			if ($catradio == 'cat') {
+				if (!isset($_POST['cat']) || isEmpty($_POST['cat'])) {
+					$error .= "<li>cat not set</li>\n";
+				}
+			} else if ($catradio == 'newcat') {
+				if (!isset($_POST['newcat']) || isEmpty($_POST['newcat'])) {
+					$error .= "<li>newcat not set</li>\n";
+				}
+			}
 		}
 		return !isset($error);
 	}
@@ -59,6 +70,32 @@
 	function processForm($db_con) {
 		global $m;
 		global $error;
+		
+		if (sanitize($_POST['catradio']) == 'newcat') {
+			//TODO: check for security sanitize..
+			$newcat = sanitize($_POST['newcat']);
+			$result = mysqli_query(
+				$db_con, 
+				"INSERT INTO 
+					movies_cats (
+						name
+					)
+				VALUES (
+					'$newcat'
+				)"
+			);
+			if(db_hasErrors($db_con, $result)) {
+				$error .= '<li>Couldnt insert new movie cat</li>';
+				return;
+			}
+			$cat = mysqli_insert_id($db_con);
+		}
+		
+		if (!isset($cat)) {
+			$cat = sanitize($_POST['cat']);
+		}
+		
+		
 		if (quote_string($db_con, $_POST['seen']) === "'on'") {
 			$seen = 1;
 		} else {
@@ -112,7 +149,7 @@
 			quote_string($db_con, $imdb_rating), 
 			quote_string($db_con, $seen), 
 			quote_string($db_con, $_POST['comment']), 
-			quote_string($db_con, $_POST['cat']), 
+			quote_string($db_con, $cat), 
 			quote_string($db_con, $rank));
 			
 		$result = mysqli_query($db_con, $q);
@@ -140,7 +177,9 @@
 	paramSmarty($smarty, 'imdb_rating');
 	paramSmarty($smarty, 'seen');
 	paramSmarty($smarty, 'comment');
+	paramSmarty($smarty, 'catradio');
 	paramSmarty($smarty, 'cat');
+	paramSmarty($smarty, 'newcat');
 	
 	if (isset($error)) {
 		$smarty->assign('error', $error);

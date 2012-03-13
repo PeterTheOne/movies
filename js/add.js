@@ -66,4 +66,24 @@ $(function() {
 			});
 		}		
 	});
+	
+	$('select[name|="cat"]').click(function() {
+		$('input[name|="catradio"][value="cat"]').prop('checked', true);
+		$('input[name|="catradio"][value="newcat"]').prop('checked', false);
+		$('input[name|="newcat"]').prop('required', false);
+	});
+	
+	$('input[name|="newcat"]').focus(function() {
+		$('input[name|="catradio"][value="cat"]').prop('checked', false);
+		$('input[name|="catradio"][value="newcat"]').prop('checked', true);
+		$('input[name|="newcat"]').prop('required', true);
+	});
+	
+	$('input[name|="catradio"][value="cat"]').click(function() {
+		$('input[name|="newcat"]').prop('required', false);
+	});
+	
+	$('input[name|="catradio"][value="newcat"]').click(function() {
+		$('input[name|="newcat"]').prop('required', true);
+	});
 });
