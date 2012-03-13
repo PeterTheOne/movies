@@ -1,0 +1,77 @@
+
+@import "reset.css";
+@import "typography.css";
+@import "layout.css";
+
+/* moz scrollbar fix */
+html {
+	overflow: -moz-scrollbars-vertical !important;
+}
+
+body {
+	overflow: auto;
+	font-size: 62.5%; 		/* sets medium size from 16px to 10px, 1em is 10px now. */
+	font-family: Georgia, Century Schoolbook L, Verdana, Arial, serif;
+	font-size: 1em;
+	padding: 30px 50px;
+}
+
+a {
+	color: #7777cc;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #5555cc;
+	text-decoration: underline;
+}
+
+a.broken {
+	color: #aaaaaa !important;
+	text-decoration: line-through !important;
+}
+
+.hidden {
+	display: none !important;
+}
+
+h1 {
+	font-style: italic;
+	font-weight: normal;
+	font-size: 3.3em;
+	display: block;
+	margin: 0 0 20px 0;
+}
+
+nav {
+	color: #999999;
+	font-size: 1.2em;
+	margin: 0 0 20px 0;
+}
+
+ul {
+	list-style-position: inside;
+}
+
+h2 {
+	font-weight: normal;
+	font-size: 2.3em;
+	margin: 25px 0 10px 0;
+	line-height: normal;
+}
+
+h3 {
+	font-weight: normal;
+	font-size: 1.5em;
+	margin: 0 0 10px 0;
+}
+
+h4{
+	font-weight: normal;
+	font-size: 1.3em;
+	margin: 0 0 5px 0;
+}
+
+td {
+	padding: 0 15px 10px 0;
+}

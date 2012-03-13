@@ -8,7 +8,7 @@
 {/if}
 		
 		<meta charset="utf-8" />
-		<!--<link rel="stylesheet" type="text/css" href="style.css" />-->
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		
 		<!-- author/me -->
 		<link rel="me" href="http://profiles.google.com/114748353184495722818" />
