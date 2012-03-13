@@ -56,6 +56,9 @@ $(function() {
 					yearMatch = true;
 				}
 				
+				$('p#status').html('status: do you mean ' + data.Title + 
+					' (' + data.Year + ') ?');
+				
 				if (title.toLowerCase() == data.Title.toLowerCase() && 
 						yearMatch) {
 					$('p#status').html('status: found');
