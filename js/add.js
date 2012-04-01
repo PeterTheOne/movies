@@ -1,16 +1,25 @@
 $(function() {
 	// TODO: validate input: is year a year
+	
+	// constants:
+	var url_base = 'http://www.imdbapi.com/';
+	var url_callback = '&callback=?';
+	
+	// variable:
+	var dataFound = null;
 		
 	$('input[name|="imdb_id"]').focusout(function() {
+		// cleanup
+		$('p#status').removeClass('do-you-mean');
+		
+		// set variables
 		var title = $('input[name|="title"]').val();
 		var imdb_id = $('input[name|="imdb_id"]').val();
 		var year = $('input[name|="year"]').val();
 		
-		var url_base = 'http://www.imdbapi.com/';
 		var url_imdb_id = '?i=' + imdb_id;
 		var url_title = '?t=' + title;
 		var url_year = '&y=' + year;
-		var url_callback = '&callback=?';
 		
 		if (imdb_id != '') {
 			$('p#status').html('status: searching by id');
@@ -25,15 +34,17 @@ $(function() {
 	});
 	
 	$('input[name|="title"]').focusout(function() {
+		// cleanup
+		$('p#status').removeClass('do-you-mean');
+		
+		// set variables
 		var title = $('input[name|="title"]').val();
 		var imdb_id = $('input[name|="imdb_id"]').val();
 		var year = $('input[name|="year"]').val();
 		
-		var url_base = 'http://www.imdbapi.com/';
 		var url_imdb_id = '?i=' + imdb_id;
 		var url_title = '?t=' + title;
 		var url_year = '&y=' + year;
-		var url_callback = '&callback=?';
 		
 		if (title != '') {
 			if (year != '') {
@@ -56,18 +67,32 @@ $(function() {
 					yearMatch = true;
 				}
 				
-				$('p#status').html('status: do you mean ' + data.Title + 
-					' (' + data.Year + ') ?');
-				
 				if (title.toLowerCase() == data.Title.toLowerCase() && 
 						yearMatch) {
 					$('p#status').html('status: found');
+					$('input[name|="title"]').val(data.Title);
 					$('input[name|="imdb_id"]').val(data.ID);
 					$('input[name|="year"]').val(data.Year);
 					$('input[name|="imdb_rating"]').val(data.Rating);
+				} else {
+					$('p#status').html('status: do you mean ' + data.Title + 
+						' (' + data.Year + ') ?').addClass('do-you-mean');
+					dataFound = data;
 				}
 			});
 		}		
+	});
+	
+	$('p#status').click(function() {
+		if ($(this).hasClass('do-you-mean') && dataFound != null) {
+			$('p#status').removeClass('do-you-mean');
+			$('p#status').html('status: found');
+			$('input[name|="title"]').val(dataFound.Title);
+			$('input[name|="imdb_id"]').val(dataFound.ID);
+			$('input[name|="year"]').val(dataFound.Year);
+			$('input[name|="imdb_rating"]').val(dataFound.Rating);
+			dataFound = null;
+		}
 	});
 	
 	$('select[name|="cat"]').click(function() {
