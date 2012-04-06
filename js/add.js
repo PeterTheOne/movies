@@ -95,6 +95,8 @@ $(function() {
 		}
 	});
 	
+	// TODO: after submit with error, it must be checked what fields are required
+	
 	$('select[name|="cat"]').click(function() {
 		$('input[name|="catradio"][value="cat"]').prop('checked', true);
 		$('input[name|="catradio"][value="newcat"]').prop('checked', false);

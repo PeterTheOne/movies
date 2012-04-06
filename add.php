@@ -42,6 +42,12 @@
 		}
 		if (!isset($_POST['imdb_id']) || isEmpty($_POST['imdb_id'])) {
 			$error .= "<li>imdb_id not set</li>\n";
+		} else {
+			$db_con = db_connect();
+			if (db_movieExistsByImdbId($db_con, sanitize($_POST['imdb_id']))) {
+				$error .= "<li>movie allready exists in database</li>\n";
+			}
+			db_disconnect($db_con);
 		}
 		if (!isset($_POST['imdb_rating']) || isEmpty($_POST['imdb_rating'])) {
 			$error .= "<li>imdb_rating not set</li>\n";
